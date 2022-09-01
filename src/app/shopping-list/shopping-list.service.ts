@@ -31,4 +31,9 @@ export class ShoppingListService {
     this.ingredients.push(...ingredients);
     this.ingredientsChanged.next(this.ingredients.slice());
   }
+
+  updateIngredient(index:number,newIngredient:Ingredient){
+    this.ingredients[index]=newIngredient;                  //把修改的ingredient存回同樣的位置(index)
+    this.ingredientsChanged.next(this.ingredients.slice())
+  }
 }
