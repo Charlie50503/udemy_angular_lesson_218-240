@@ -1,3 +1,4 @@
+import { Recipe } from './../recipe.model';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -23,10 +24,30 @@ export class RecipeEditComponent implements OnInit {
       this.editMode = params['id'] != null;
       this.initForm();
     });
+
   }
 
   onSubmit() {
-    console.log(this.recipeForm);
+    // 方法一
+    // const newRecipe = new Recipe(
+    //   this.recipeForm.value["name"],
+    //   this.recipeForm.value["description"],
+    //   this.recipeForm.value["imagePath"],
+    //   this.recipeForm.value["ingredients"],
+    // )
+
+    // if(this.editMode){
+    //   this.recipeService.updateRecipe(this.id,newRecipe)
+    // }else{
+    //   this.recipeService.addRecipe(newRecipe)
+    // }
+
+    // 方法二：由於我們表單的值跟 recipe modal 是一樣的，所以也可以直接套用上去
+    if(this.editMode){
+      this.recipeService.updateRecipe(this.id,this.recipeForm.value)
+    }else{
+      this.recipeService.addRecipe(this.recipeForm.value)
+    }
   }
 
   onAddIngredient() {
